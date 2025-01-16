@@ -85,12 +85,54 @@ fn solve(Q: usize, X: Vec<usize>) -> Vec<bool> {
     }
     result
 }
-
 fn is_prime(x: usize) -> bool {
+    // Using the square root of x (O(sqrt(N))) (AC)
     for i in 2..x.sqrt() + 1 {
-        if (x % i) == 0 {
-            return false
+        if x % i == 0 {
+            return false;
         }
     }
     true
+
+    // Simple version (O(N)) (TLE)
+    /*
+    for i in 2..x {
+        if x % i == 0 {
+            return false;
+        }
+    }
+    true
+    */
+
+    // Eratosthenes sieve (O(N log log N)) (TLE)
+    /*
+    let mut prime_table = vec![true; x + 1];
+    prime_table.iter_mut().take(2).for_each(|x| *x = false);
+    for i in 2..x {
+        if prime_table[i] {
+            let mut j = i * 2;
+            while j <= x {
+                prime_table[j] = false;
+                j += i;
+            }
+        }
+    }
+    prime_table[x]
+    */
+
+    // Eratosthenes sieve with using the square root of x (O(sqrt(N) log log N)) (TLE)
+    /*
+    let mut prime_table = vec![true; x + 1];
+    prime_table.iter_mut().take(2).for_each(|x| *x = false);
+    for i in 2..x.sqrt() + 1 {
+        if prime_table[i] {
+            let mut j = i * 2;
+            while j <= x.sqrt() {
+                prime_table[j] = false;
+                j += i;
+            }
+        }
+    }
+    prime_table[x]
+    */
 }
