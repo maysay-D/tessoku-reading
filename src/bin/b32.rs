@@ -65,17 +65,24 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
+        K: usize,
+        A: [usize; K],
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(N, A);
+    println!("{}", if ans {"First"} else {"Second"});
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, A: Vec<usize>) -> bool {
+    let mut dp = vec![false; N + 1];
+    for i in 0..=N {
+        for &a in &A {
+            if i.checked_sub(a).is_some() && !dp[i - a] {
+                dp[i] = true
+            }
+        }
+    }
+    dp[N]
 }
