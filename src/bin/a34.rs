@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+#![allow(unused_variables)]
 #![allow(non_snake_case)]
 use ac_library::*;
 use once_cell::sync::Lazy;
@@ -65,17 +66,41 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
+        X: usize,
+        Y: usize,
+        A: [usize; N],
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(N, X, Y, A);
+    println!("{}", if ans {"First"} else {"Second"});
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, X: usize, Y: usize, A: Vec<usize>) -> bool {
+    let mut grundies = vec![0; A.clone().into_iter().max().unwrap() + 1];
+
+    for i in 0..=A.clone().into_iter().max().unwrap() {
+        let mut trans = vec![false; 3];
+        if i.checked_sub(X).is_some() {
+            trans[grundies[i - X]] = true;
+        }
+        if i.checked_sub(Y).is_some() {
+            trans[grundies[i - Y]] = true;
+        }
+        if trans[0] == false {
+            grundies[i] = 0
+        } else if trans[1] == false {
+            grundies[i] = 1
+        } else {
+            grundies[i] = 2
+        }
+    }
+
+    let mut result = grundies[A[0]];
+    for i in 1..N {
+        result ^= grundies[A[i]];
+    }
+
+    result != 0
 }
