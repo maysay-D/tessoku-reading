@@ -78,15 +78,12 @@ fn main() {
 fn solve(N: usize, A: usize, B: usize) -> bool {
     let mut dp = vec![false; N + 1];
     for i in 0..=N {
-        if i.checked_sub(A).unwrap_or_else(|| usize::MAX) != usize::MAX ||
-            i.checked_sub(B).unwrap_or_else(|| usize::MAX) != usize::MAX {
-            if i >= A && dp[i-A] == false {
-                dp[i] = true
-            } else if i >= B && dp[i-B] == false {
-                dp[i] = true
-            } else {
-                dp[i] = false
-            }
+        if i.checked_sub(A).is_some() && !dp[i-A] {
+            dp[i] = true
+        } else if i.checked_sub(B).is_some() && !dp[i-B] {
+            dp[i] = true
+        } else {
+            dp[i] = false
         }
     }
     dp[N]
