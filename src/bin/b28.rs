@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+#![allow(unused_variables)]
 #![allow(non_snake_case)]
 use ac_library::*;
 use once_cell::sync::Lazy;
@@ -64,18 +65,21 @@ use text_io::*;
 use rustc_hash::*;
 use smallvec::*;
 
+const MOD: usize = 1_000_000_007;
+
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
     }
 
-    let ans = solve(n, &a);
+    let ans = solve(N);
     println!("{}", ans);
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize) -> usize {
+    let mut a = vec![1; 3];
+    for i in 3..=N {
+        a.push(a[i-1] + a[i-2] % MOD)
+    }
+    a[N] % MOD
 }
