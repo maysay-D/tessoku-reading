@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+#![allow(unused_variables)]
 #![allow(non_snake_case)]
 use ac_library::*;
 use once_cell::sync::Lazy;
@@ -65,17 +66,31 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        Q: usize,
+        X: [usize; Q],
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(Q, X);
+    for a in ans {
+        println!("{}", if a { "Yes" } else { "No" });
+    }
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(Q: usize, X: Vec<usize>) -> Vec<bool> {
+    let mut result = vec![false; Q];
+    for i in 0..Q {
+        let x = X[i];
+        result[i] = is_prime(x);
+    }
+    result
+}
+
+fn is_prime(x: usize) -> bool {
+    for i in 2..x.sqrt() + 1 {
+        if (x % i) == 0 {
+            return false
+        }
+    }
+    true
 }
