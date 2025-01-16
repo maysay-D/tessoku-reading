@@ -79,15 +79,15 @@ fn solve(A: u64, B: u64) -> u64 {
     let mut a = A;
     let mut b = B;
 
-    while a != b {
-        if a > b {
-            a -= b;
+    while a >= 1 && b >= 1 {
+        if a >= b {
+            a %= b;
         } else {
-            b -= a;
+            b %= a;
         }
     }
 
-    let result = A * B / a;
+    let result = A * B / a.max(b);
 
     result
 }
