@@ -65,17 +65,24 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: u64,
     }
 
-    let ans = solve(n, &a);
+    let ans = solve(N);
     println!("{}", ans);
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+
+fn solve(N: u64) -> u64 {
+    let three = N / 3;
+    let five = N / 5;
+    let seven = N / 7;
+    let three_five = N / (3 * 5);
+    let three_seven = N / (3 * 7);
+    let five_seven = N / (5 * 7);
+    let three_five_seven = N / (3 * 5 * 7);
+    let result = three + five + seven - three_five - three_seven - five_seven + three_five_seven;
+
+    result
 }
