@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+#![allow(unused_variables)]
 #![allow(non_snake_case)]
 use ac_library::*;
 use once_cell::sync::Lazy;
@@ -65,17 +66,23 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
+        H: usize,
+        W: usize,
+        AB: [(Usize1, Usize1); N],
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let (A, B) = AB.iter().cloned().unzip();
+
+    let ans = solve(N, A, B);
+    println!("{}", if ans {"First"} else {"Second"});
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, A: Vec<usize>, B: Vec<usize>) -> bool {
+    let mut result = A[0] ^ B[0];
+    for i in 1..N {
+        result ^= A[i] ^ B[i];
+    }
+    result != 0
 }
