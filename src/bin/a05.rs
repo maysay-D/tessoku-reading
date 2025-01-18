@@ -65,17 +65,23 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
+        K: usize,
     }
 
-    let ans = solve(n, &a);
+    let ans = solve(N, K);
     println!("{}", ans);
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, K: usize) -> usize {
+    let mut result = 0;
+    for a in 1..=N {
+        for b in 1..=N {
+            if K <= N + a + b && a + b < K {
+                result += 1
+            }
+        }
+    }
+    result
 }
