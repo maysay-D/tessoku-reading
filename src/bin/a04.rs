@@ -65,17 +65,33 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    // Quick solution
+    println!("{:010b}", N);
+
+    // Normal solution
+    /*
+    let ans = solve(N);
+    println!("{:0>10}", ans.iter().collect::<String>());
+    */
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+/*
+fn solve(N: usize) -> Vec<char> {
+    let mut result = vec![];
+    let mut n = N;
+    while n > 0 {
+        if n % 2 == 0 {
+            result.push('0')
+        } else {
+            result.push('1')
+        }
+        n /= 2;
+    }
+    result.reverse();
+    result
 }
+*/
