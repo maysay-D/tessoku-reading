@@ -1,4 +1,5 @@
 #![allow(unused_imports)]
+#![allow(unused_variables)]
 #![allow(non_snake_case)]
 use ac_library::*;
 use once_cell::sync::Lazy;
@@ -65,17 +66,26 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
+        K: usize,
+        P: [usize; N],
+        Q: [usize; N],
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(N, K, P, Q);
+    println!("{}", if ans {"Yes"} else {"No"});
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, K: usize, P: Vec<usize>, Q: Vec<usize>) -> bool {
+    let mut result = false;
+    for i in 0..N {
+        for j in 0..N {
+            if P[i] + Q[j] == K {
+                result = true;
+                break;
+            }
+        }
+    }
+    result
 }
