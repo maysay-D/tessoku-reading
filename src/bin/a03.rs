@@ -78,14 +78,12 @@ fn main() {
 }
 
 fn solve(N: usize, K: usize, P: Vec<usize>, Q: Vec<usize>) -> bool {
-    let mut result = false;
     for i in 0..N {
         for j in 0..N {
             if P[i] + Q[j] == K {
-                result = true;
-                break;
+                return true;
             }
         }
     }
-    result
+    false
 }
