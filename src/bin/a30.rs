@@ -64,18 +64,38 @@ use text_io::*;
 use rustc_hash::*;
 use smallvec::*;
 
+const MOD: usize = 1_000_000_007;
+
 fn main() {
-    // 問題に応じて変更する
     input! {
         n: usize,
-        a: [isize; n],
+        r: usize,
     }
 
-    let ans = solve(n, &a);
+    let ans = solve(n, r);
     println!("{}", ans);
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(n: usize, r: usize) -> usize {
+    let n_perm = (1..=n).fold(1, |acc, x| acc * x % MOD);
+    let r_perm = (1..=r).fold(1, |acc, x| acc * x % MOD);
+    let n_r_perm = (1..=n - r).fold(1, |acc, x| acc * x % MOD);
+    n_perm * power(r_perm * n_r_perm, MOD - 2) % MOD
+}
+
+fn power(a: usize, b: usize) -> usize {
+    let mut result = 1;
+    let mut a = a;
+    let mut exp = 0;
+    let mut count = 0;
+    while exp < b {
+        exp = 1 << count;
+        a %= MOD;
+        if (b / exp) % 2 == 1 {
+            result = (result * a) % MOD;
+        }
+        a *= a;
+        count += 1;
+    }
+    result
 }
