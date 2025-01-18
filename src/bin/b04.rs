@@ -65,17 +65,29 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: proconio::marker::Chars,
     }
 
-    let ans = solve(n, &a);
+    // Quick solution
+    let N = N.iter().collect::<String>();
+    println!("{}", usize::from_str_radix(&N, 2).unwrap());
+
+    // Normal solution
+    /*
+    let ans = solve(N);
     println!("{}", ans);
+    */
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+/*
+fn solve(N: Vec<char>) -> usize {
+    let mut result = 0;
+    for (i, b) in N.iter().enumerate() {
+        if *b == '1' {
+            result += 1 << (N.len() - i - 1);
+        }
+    }
+    result
 }
+*/
