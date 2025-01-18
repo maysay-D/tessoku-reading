@@ -77,17 +77,18 @@ fn main() {
     println!("{}", ans);
 }
 
-fn solve(a: u64, b: u64) -> u64 {
+fn solve(a: usize, b: usize) -> usize {
     let mut result = 1;
     let mut a = a;
     let mut exp = 0;
     let mut count = 0;
     while exp < b {
         exp = 1 << count;
+        a %= MOD;
         if (b / exp) % 2 == 1 {
             result = (result * a) % MOD;
         }
-        a = (a * a) % MOD;
+        a *= a;
         count += 1;
     }
     result
