@@ -65,17 +65,15 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        A: usize,
+        B: usize
     }
 
-    let ans = solve(n, &a);
+    let ans = solve(A, B);
     println!("{}", ans);
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(A: usize, B: usize) -> usize {
+    A + B
 }
