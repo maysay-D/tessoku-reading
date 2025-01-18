@@ -65,12 +65,12 @@ use text_io::*;
 use rustc_hash::*;
 use smallvec::*;
 
-const MOD: u64 = 1_000_000_007;
+const MOD: usize = 1_000_000_007;
 
 fn main() {
     input! {
-        a: u64,
-        b: u64,
+        a: usize,
+        b: usize,
     }
 
     let ans = solve(a, b);
