@@ -65,17 +65,27 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        T: usize,
+        N: usize,
+        LR: [(usize, usize); N],
     }
+    let L = LR.iter().map(|&(l, _)| l).collect::<Vec<_>>();
+    let R = LR.iter().map(|&(_, r)| r).collect::<Vec<_>>();
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(T, N, L, R);
+    println!("{}", ans[..T].iter().join("\n"));
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(T: usize, N: usize, L: Vec<usize>, R: Vec<usize>) -> Vec<usize> {
+    let mut res: Vec<isize> = vec![0; T + 1];
+    for i in 0..N {
+        res[L[i]] += 1;
+        res[R[i]] -= 1;
+    }
+    for i in 1..=T {
+        res[i] += res[i - 1];
+    }
+    let res = res.into_iter().map(|x| x as usize).collect();
+    res
 }
