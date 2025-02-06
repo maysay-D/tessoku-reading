@@ -65,17 +65,43 @@ use rustc_hash::*;
 use smallvec::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        N: usize,
+        A: [usize; N],
+        Q: usize,
     }
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(N, A, Q);
+    println!("{}",
+             ans.into_iter().map(
+                 |x| if x == 0 { "win" } else if x == 1 { "lose" } else { "draw" }
+             ).join("\n"));
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, A: Vec<usize>, Q: usize) -> Vec<usize> {
+    let mut res = vec![];
+    let mut hit = vec![0; N + 1];
+    let mut miss = vec![0; N + 1];
+
+    for i in 1..=N {
+        hit[i] = hit[i - 1] + if A[i - 1] == 0 { 0 } else { 1 };
+        miss[i] = miss[i - 1] + if A[i - 1] == 0 { 1 } else { 0 };
+    }
+
+    for _ in 0..Q {
+        input! {
+            L: usize,
+            R: usize,
+        }
+        let h = hit[R] - hit[L - 1];
+        let m = miss[R] - miss[L - 1];
+        if h > m {
+            res.push(0);
+        } else if h < m {
+            res.push(1);
+        } else {
+            res.push(2);
+        }
+    }
+    res
 }
