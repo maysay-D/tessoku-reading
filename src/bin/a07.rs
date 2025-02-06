@@ -63,19 +63,32 @@ use proconio::marker::*;
 use text_io::*;
 use rustc_hash::*;
 use smallvec::*;
+use std::cmp::*;
 
 fn main() {
-    // 問題に応じて変更する
     input! {
-        n: usize,
-        a: [isize; n],
+        D: usize,
+        N: usize,
+        LR: [(usize, usize); N],
     }
+    let L = LR.iter().map(|&(l, _)| l).collect::<Vec<_>>();
+    let R = LR.iter().map(|&(_, r)| r).collect::<Vec<_>>();
 
-    let ans = solve(n, &a);
-    println!("{}", ans);
+    let ans = solve(D, N, L, R);
+    println!("{}", ans[1..].iter().join("\n"));
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(D: usize, N: usize, L: Vec<usize>, R: Vec<usize>) -> Vec<isize> {
+    // 1-indexed + sentinel node of the right end = D + 2
+    let mut B: Vec<isize> = vec![0; D + 2];
+    for i in 0..N {
+        B[L[i]] += 1;
+        B[R[i] + 1] -= 1;
+    }
+    // 1-indexed = D + 1
+    let mut res = vec![0; D + 1];
+    for i in 1..=D {
+        res[i] = res[i - 1] + B[i];
+    }
+    res
 }
