@@ -64,18 +64,44 @@ use text_io::*;
 use rustc_hash::*;
 use smallvec::*;
 
-fn main() {
-    // 問題に応じて変更する
-    input! {
-        n: usize,
-        a: [isize; n],
-    }
+const LIMIT: usize = 1501;
 
-    let ans = solve(n, &a);
+fn main() {
+    input! {
+        N: usize,
+        ABCD: [(usize, usize, usize, usize); N],
+    }
+    let A = ABCD.iter().map(|&(a, _, _, _)| a).collect::<Vec<_>>();
+    let B = ABCD.iter().map(|&(_, b, _, _)| b).collect::<Vec<_>>();
+    let C = ABCD.iter().map(|&(_, _, c, _)| c).collect::<Vec<_>>();
+    let D = ABCD.iter().map(|&(_, _, _, d)| d).collect::<Vec<_>>();
+
+    let ans = solve(N, A, B, C, D);
     println!("{}", ans);
 }
 
-// 問題に応じて変更する
-fn solve(n: usize, a: &[isize]) -> isize {
-    todo!()
+fn solve(N: usize, A: Vec<usize>, B: Vec<usize>, C: Vec<usize>, D: Vec<usize>) -> usize {
+    let mut res = 0;
+    let mut grid = vec![vec![0; LIMIT]; LIMIT];
+    let mut max_x = 0;
+    let mut max_y = 0;
+    for i in 0..N {
+        grid[A[i]][B[i]] += 1;
+        grid[C[i]][D[i]] += 1;
+        grid[A[i]][D[i]] -= 1;
+        grid[C[i]][B[i]] -= 1;
+        max_x = max_x.max(C[i] + 1);
+        max_y = max_y.max(D[i] + 1);
+    }
+
+    let mut S = vec![vec![0; max_y + 1]; max_x + 1];
+    for i in 1..=max_x {
+        for j in 1..=max_y {
+            S[i][j] = S[i - 1][j] + S[i][j - 1] - S[i - 1][j - 1] + grid[i - 1][j - 1];
+            if S[i][j] > 0 {
+                res += 1;
+            }
+        }
+    }
+    res
 }
